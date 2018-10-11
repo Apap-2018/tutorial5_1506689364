@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title id="pageTitle">Add Flight</title>
+		<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+		<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+	</head>
+	
+	<body>
+		<nav th:replace="fragments/fragment :: navbar"></nav>
+		
+		<h3>Add Flight</h3>	
+		
+		<form th:action="@{/flight/add/} + ${pilot.licenseNumber}" th:object="${pilot}" method="POST">
+	        <table>
+	            <thead>
+	            <tr>
+	            	<th style="text-align: center">No.</th>
+	                <th style="text-align: center">Flight Number</th>
+	                <th style="text-align: center">Origin</th>
+	                <th style="text-align: center">Destination</th>
+	                <th style="text-align: center">Time</th>
+	                <th style="text-align: center">
+	                    <button type="submit" name="addRow">Add flight</button>
+	                </th>
+	            </tr>
+	            </thead>
+	            <tbody>
+	            <tr th:each="flight,rowStatus : *{pilotFlight}">
+	            	<td th:text="${rowStatus.count}">1</td>
+	                <td>
+	                    <input type="text" th:field="*{pilotFlight[__${rowStatus.index}__].flightNumber}" />
+	                </td>
+	                <td>
+	                    <input type="text" th:field="*{pilotFlight[__${rowStatus.index}__].origin}" />
+	                </td>
+	                <td>
+	                    <input type="text" th:field="*{pilotFlight[__${rowStatus.index}__].destination}" />
+	                </td>
+	                <td>
+	                    <input type="date" th:field="*{pilotFlight[__${rowStatus.index}__].time}" />
+	                </td>
+	
+	            </tr>
+	            </tbody>
+	        </table>
+        	<button name="submit" type="submit">Submit</button>
+    	</form>
+		
+	</body>
+</html>
